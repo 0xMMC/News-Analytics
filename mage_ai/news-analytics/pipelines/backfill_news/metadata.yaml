@@ -1,19 +1,228 @@
 blocks:
 - all_upstream_blocks_executed: true
   color: null
+  configuration:
+    dynamic: true
+  downstream_blocks:
+  - process_news
+  - process_news_sentiments
+  - process_news_keywords
+  - process_news_entities
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: news_topics_loop
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: news_topics_loop
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    reduce_output: true
+  downstream_blocks:
+  - news_to_gcs
+  - news_to_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: process_news
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - news_topics_loop
+  uuid: process_news
+- all_upstream_blocks_executed: false
+  color: null
   configuration: {}
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: load_news_from_api
+  name: news_to_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news
+  uuid: news_to_bq
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: news_to_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news
+  uuid: news_to_gcs
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    reduce_output: true
+  downstream_blocks:
+  - sentiments_to_gcs
+  - sentiments_to_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: process_news_sentiments
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - news_topics_loop
+  uuid: process_news_sentiments
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: sentiments_to_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_sentiments
+  uuid: sentiments_to_bq
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: sentiments_to_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_sentiments
+  uuid: sentiments_to_gcs
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    reduce_output: true
+  downstream_blocks:
+  - keywords_to_gcs
+  - keywords_to_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: process_news_keywords
   retry_config: null
   status: updated
   timeout: null
-  type: data_loader
-  upstream_blocks: []
-  uuid: load_news_from_api
+  type: transformer
+  upstream_blocks:
+  - news_topics_loop
+  uuid: process_news_keywords
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: keywords_to_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_keywords
+  uuid: keywords_to_bq
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: keywords_to_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_keywords
+  uuid: keywords_to_gcs
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    reduce_output: true
+  downstream_blocks:
+  - entities_to_gcs
+  - entities_to_bq
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: process_news_entities
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - news_topics_loop
+  uuid: process_news_entities
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: entities_to_bq
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_entities
+  uuid: entities_to_bq
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: entities_to_gcs
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - process_news_entities
+  uuid: entities_to_gcs
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

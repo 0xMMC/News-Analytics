@@ -1,0 +1,8 @@
+requests
+pandas
+datetime
+uuid
+vaderSentiment
+rake-nltk
+nltk
+spacy
