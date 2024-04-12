@@ -12,15 +12,21 @@ nltk.download('punkt')
 
 kw_extractor = Rake(max_length=2)
 def get_significant_keywords(text:str) -> list:
-    kw_extractor.extract_keywords_from_text(text)
-    ranked_keywords = kw_extractor.get_ranked_phrases_with_scores()
+    
     final_keywords = []
-    for kw in ranked_keywords:
-        try:
-            if kw[0] >= 4:
-                final_keywords.append(kw[1])
-        except:
-            pass
+
+    try:
+        kw_extractor.extract_keywords_from_text(text)
+        ranked_keywords = kw_extractor.get_ranked_phrases_with_scores()
+    
+        for kw in ranked_keywords:
+            try:
+                if kw[0] >= 4:
+                    final_keywords.append(kw[1])
+            except:
+                pass
+    except:
+        pass
     return final_keywords
 
 @transformer

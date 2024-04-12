@@ -18,11 +18,17 @@ def transform(data, *args, **kwargs):
     summary_entities = {}
 
     for id, title, description in zip(data['ID'], data['title'], data['description']):
-        
-        title_ents = nlp(title)
-        summary_ents = nlp(description)
-        title_entities[id] = [ent.text for ent in title_ents.ents]
-        summary_entities[id] = [ent.text for ent in summary_ents.ents]
+        try:
+            title_ents = nlp(title)
+            title_entities[id] = [ent.text for ent in title_ents.ents]
+        except:
+            title_entities[id] = ''
+
+        try:
+            summary_ents = nlp(description)
+            summary_entities[id] = [ent.text for ent in summary_ents.ents]
+        except:
+            summary_entities[id] = ''
 
 
     df_title_entities = pd.DataFrame(title_entities.values(), index=title_entities.keys()).reset_index().melt(id_vars='index')

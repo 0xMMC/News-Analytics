@@ -19,8 +19,8 @@ nltk.download('punkt')
 import spacy
 nlp = spacy.load("en_core_web_sm")
 
-AGO_30 = str(datetime.today().date()-timedelta(days=30))
-TODAY = str(datetime.today().date())
+TODAY_START = str(datetime.today().date()-timedelta(days=1))+"T00:00:00"
+TODAY_NOW = str(datetime.today().date()) + "T" + str(datetime.today().time())[:8]
 SOURCES = 'abc-news,al-jazeera-english,associated-press,axios,bbc-news,bloomberg,cnn,google-news,national-geographic,new-scientist,reddit-r-all,reuters,techcrunch,techradar,the-huffington-post,the-verge,the-wall-street-journal,the-washington-post,time,wired'
 
 NEWS_API_KEY = get_secret_value('NEWS_API_KEY')
@@ -56,7 +56,7 @@ def load_data(*args, **kwargs):
           'entertainment','science','human-rights']
     TEST_TOPICS = ['stock-market', 'climate-change']
 
-    return [[{topic:get_news(topic=topic, date_from=AGO_30, date_to=TODAY)} for topic in TOPICS]]
+    return [[{topic:get_news(topic=topic, date_from=TODAY_START, date_to=TODAY_NOW)} for topic in TOPICS]]
 
 @test
 def test_output(output, *args) -> None:

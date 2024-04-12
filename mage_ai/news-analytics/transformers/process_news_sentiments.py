@@ -14,17 +14,24 @@ def transform(data, *args, **kwargs):
         dfs.append(pd.DataFrame(val))
     data = pd.concat(dfs)
     
+
     title_sentiments = {}
     summary_sentiments = {}
 
     for id, title, description in zip(data['ID'], data['title'], data['description']):
         
         # Get title and summary sentiment
-        title_sentiment = analyzer.polarity_scores(title)
-        summary_sentiment = analyzer.polarity_scores(description)
-
-        title_sentiments[id] = title_sentiment['compound']
-        summary_sentiments[id] = summary_sentiment['compound']
+        try:
+            title_sentiment = analyzer.polarity_scores(title)
+            title_sentiments[id] = title_sentiment['compound']
+        except:
+            title_sentiments[id] = 0
+        
+        try:
+            summary_sentiment = analyzer.polarity_scores(description)
+            summary_sentiments[id] = summary_sentiment['compound']
+        except:
+            summary_sentiments[id] = 0
 
     df_title_sentiments = pd.DataFrame(title_sentiments.items(), columns=['ID','Title Sentiment'])
     df_summary_sentiments = pd.DataFrame(summary_sentiments.items(), columns=['ID','Summary Sentiment'])
