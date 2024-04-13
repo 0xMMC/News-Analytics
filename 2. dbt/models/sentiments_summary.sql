@@ -1,4 +1,10 @@
-{{ config(materialized="table") }}
+{{ config(
+    materialized='table',
+    partition_by={
+      "field": "topic",
+      "data_type": "string"
+    }
+)}}
 
 select
     s.*,
