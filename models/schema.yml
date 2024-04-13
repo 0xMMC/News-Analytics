@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: news
+    description: "A table containing news articles"
+
+  - name: sentiments
+    description: "A table containing sentiment analysis results for news articles"
+
+  - name: keywords
+    description: "A table containing the keywords extracted from news articles"
+
+  - name: entities
+    description: "A table containing the entities extracted from news articles"
