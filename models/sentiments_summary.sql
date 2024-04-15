@@ -1,7 +1,7 @@
 {{ config(
     materialized='table',
     partition_by={
-        "field": "News_Date",
+        "field": "publishedAt",
         "data_type": "date"
     },
     cluster_by=[
@@ -10,11 +10,10 @@
 ) }}
 
 select
-    extract(date from CAST(n.publishedAt as DATETIME)) AS News_Date,
+    extract(date from CAST(n.publishedAt as DATETIME)) AS publishedAt,
     s.*,
     (s.Title_Sentiment + s.Summary_Sentiment)/2 as Average_Sentiment,
-    n.topic,
-    n.publishedAt
+    n.topic
 from
     news_analytics.sentiments s
 left join

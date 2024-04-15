@@ -1,7 +1,7 @@
 {{ config(
     materialized='table',
     partition_by={
-        "field": "News_Date",
+        "field": "publishedAt",
         "data_type": "date"
     },
     cluster_by=[
@@ -10,8 +10,7 @@
 ) }}
 
 select
-    extract(date from CAST(n.publishedAt as DATETIME)) AS News_Date,
-    n.publishedAt,
+    extract(date from CAST(n.publishedAt as DATETIME)) AS publishedAt,
     n.topic,
     k.Keywords,
     count(*) Keyword_Count
