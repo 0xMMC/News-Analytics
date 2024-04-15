@@ -35,17 +35,22 @@ def get_news(topic:str, date_from:str, date_to:str) -> tuple[pd.DataFrame]:
         f'sources={SOURCES}&'
         f'apiKey={NEWS_API_KEY}')
 
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        r = response.json()
 
-    response = requests.get(url)
-    response.raise_for_status()
-    r = response.json()
+        df = pd.DataFrame(r['articles'])
+        df['source'] = df['source'].apply(lambda x:x['name'])
+        df['ID'] = [str(uuid.uuid4()) for x in df['publishedAt']]
+        df['topic'] = topic
+        df['publishedAt'] = pd.to_datetime(df['publishedAt'])
+        df['publishedAt'] = df['publishedAt'].dt.tz_localize(None)
 
-    df = pd.DataFrame(r['articles'])
-    df['source'] = df['source'].apply(lambda x:x['name'])
-    df['ID'] = [str(uuid.uuid4()) for x in df['publishedAt']]
-    df['topic'] = topic
-
-    return df
+        return df
+    except:
+        # sometimes certain topics are not in the news for a period of time
+        pass
 
 @data_loader
 def load_data(*args, **kwargs):

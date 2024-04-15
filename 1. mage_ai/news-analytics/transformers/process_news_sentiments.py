@@ -14,7 +14,6 @@ def transform(data, *args, **kwargs):
         dfs.append(pd.DataFrame(val))
     data = pd.concat(dfs)
     
-
     title_sentiments = {}
     summary_sentiments = {}
 

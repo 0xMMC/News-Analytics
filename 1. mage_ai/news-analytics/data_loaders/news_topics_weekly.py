@@ -19,7 +19,7 @@ nltk.download('punkt')
 import spacy
 nlp = spacy.load("en_core_web_sm")
 
-TODAY_START = str(datetime.today().date()-timedelta(days=1))+"T00:00:00"
+WEEK_START = str(datetime.today().date()-timedelta(days=7))+"T00:00:00"
 TODAY_NOW = str(datetime.today().date()) + "T" + str(datetime.today().time())[:8]
 SOURCES = 'abc-news,al-jazeera-english,associated-press,axios,bbc-news,bloomberg,cnn,google-news,national-geographic,new-scientist,reddit-r-all,reuters,techcrunch,techradar,the-huffington-post,the-verge,the-wall-street-journal,the-washington-post,time,wired'
 
@@ -35,17 +35,22 @@ def get_news(topic:str, date_from:str, date_to:str) -> tuple[pd.DataFrame]:
         f'sources={SOURCES}&'
         f'apiKey={NEWS_API_KEY}')
 
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        r = response.json()
 
-    response = requests.get(url)
-    response.raise_for_status()
-    r = response.json()
-
-    df = pd.DataFrame(r['articles'])
-    df['source'] = df['source'].apply(lambda x:x['name'])
-    df['ID'] = [str(uuid.uuid4()) for x in df['publishedAt']]
-    df['topic'] = topic
-
-    return df
+        df = pd.DataFrame(r['articles'])
+        df['source'] = df['source'].apply(lambda x:x['name'])
+        df['ID'] = [str(uuid.uuid4()) for x in df['publishedAt']]
+        df['topic'] = topic
+        df['publishedAt'] = pd.to_datetime(df['publishedAt'])
+        df['publishedAt'] = df['publishedAt'].dt.tz_localize(None)
+        
+        return df
+    except:
+        # sometimes certain topics are not in the news on a given day
+        pass
 
 @data_loader
 def load_data(*args, **kwargs):
@@ -54,9 +59,9 @@ def load_data(*args, **kwargs):
           'artificial-intelligence','natural-disaster', 'international-politics',
           'social-media','inflation','education',
           'entertainment','science','human-rights']
-    TEST_TOPICS = ['stock-market', 'climate-change']
+    TEST_TOPICS = ['stock-market', 'climate-change','human-rights']
 
-    return [[{topic:get_news(topic=topic, date_from=TODAY_START, date_to=TODAY_NOW)} for topic in TOPICS]]
+    return [[{topic:get_news(topic=topic, date_from=WEEK_START, date_to=TODAY_NOW)} for topic in TOPICS]]
 
 @test
 def test_output(output, *args) -> None:

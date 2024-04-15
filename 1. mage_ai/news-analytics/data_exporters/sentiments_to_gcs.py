@@ -5,6 +5,7 @@ from pandas import DataFrame
 from os import path
 
 import pandas as pd
+from datetime import datetime
 
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
@@ -17,8 +18,11 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
 
     dfs = pd.concat(df)
 
+    TIMESTAMP = str(datetime.today().date())
+
+    
     bucket_name = 'news-analytics-419010-terra-bucket'
-    object_key = 'sentiments_seed.parquet'
+    object_key = f'{TIMESTAMP}_sentiments_seed.parquet'
 
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
         dfs,

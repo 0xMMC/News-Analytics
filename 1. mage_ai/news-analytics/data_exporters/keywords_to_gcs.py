@@ -3,6 +3,7 @@ from mage_ai.io.config import ConfigFileLoader
 from mage_ai.io.google_cloud_storage import GoogleCloudStorage
 from pandas import DataFrame
 from os import path
+from datetime import datetime
 
 import pandas as pd
 
@@ -17,8 +18,10 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
 
     dfs = pd.concat(df)
 
+    TIMESTAMP = str(datetime.today().date())
+
     bucket_name = 'news-analytics-419010-terra-bucket'
-    object_key = 'keywords_seed.parquet'
+    object_key = f'{TIMESTAMP}_keywords_seed.parquet'
 
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
         dfs,

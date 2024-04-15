@@ -12,11 +12,11 @@ blocks:
   language: python
   name: process_news
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: transformer
   upstream_blocks:
-  - news_topics_daily
+  - news_topics_weekly
   uuid: process_news
 - all_upstream_blocks_executed: false
   color: null
@@ -63,11 +63,11 @@ blocks:
   language: python
   name: process_news_sentiments
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: transformer
   upstream_blocks:
-  - news_topics_daily
+  - news_topics_weekly
   uuid: process_news_sentiments
 - all_upstream_blocks_executed: false
   color: null
@@ -95,7 +95,7 @@ blocks:
   language: python
   name: sentiments_to_gcs
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -118,7 +118,7 @@ blocks:
   timeout: null
   type: transformer
   upstream_blocks:
-  - news_topics_daily
+  - news_topics_weekly
   uuid: process_news_keywords
 - all_upstream_blocks_executed: false
   color: null
@@ -146,7 +146,7 @@ blocks:
   language: python
   name: keywords_to_gcs
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -169,7 +169,7 @@ blocks:
   timeout: null
   type: transformer
   upstream_blocks:
-  - news_topics_daily
+  - news_topics_weekly
   uuid: process_news_entities
 - all_upstream_blocks_executed: false
   color: null
@@ -197,7 +197,7 @@ blocks:
   language: python
   name: entities_to_gcs
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
   type: data_exporter
   upstream_blocks:
@@ -206,8 +206,9 @@ blocks:
 - all_upstream_blocks_executed: true
   color: null
   configuration:
+    dynamic: true
     file_source:
-      path: data_loaders/news_topics_daily.py
+      path: data_loaders/news_topics_weekly.py
   downstream_blocks:
   - process_news
   - process_news_sentiments
@@ -217,26 +218,26 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: news_topics_daily
+  name: news_topics_weekly
   retry_config: null
   status: updated
   timeout: null
   type: data_loader
   upstream_blocks: []
-  uuid: news_topics_daily
+  uuid: news_topics_weekly
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
 conditionals: []
 created_at: '2024-04-04 19:39:42.320806+00:00'
 data_integration: null
-description: Batch pipeline to extract the day's news data to Parquet files and BigQuery
+description: Batch pipeline to extract the week's news data to Parquet files and BigQuery
   tables.
 executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: daily_news
+name: weekly_news
 notification_config: {}
 remote_variables_dir: null
 retry_config: {}
@@ -246,8 +247,7 @@ settings:
 spark_config: {}
 tags: []
 type: python
-uuid: daily_news
-variables:
-  NEWS_API_KEY: 11fe08baf94b4d759343973d4e2000df
+uuid: weekly_news
+variables: {}
 variables_dir: /home/src/mage_data/news-analytics
 widgets: []

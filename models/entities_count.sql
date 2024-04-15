@@ -1,16 +1,20 @@
 {{ config(
     materialized='table',
     partition_by={
-      "field": "topic",
-      "data_type": "string"
-    }
-)}}
+        "field": "News_Date",
+        "data_type": "date"
+    },
+    cluster_by=[
+        "topic"
+    ]
+) }}
 
 select
+    extract(date from CAST(n.publishedAt as DATETIME)) AS News_Date,
     n.publishedAt,
     n.topic,
     e.Entities,
-    count(*) Entities_Count
+    count(*) AS Entities_Count
 from
     news_analytics.entities e
 left join
