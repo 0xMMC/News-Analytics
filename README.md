@@ -8,7 +8,6 @@ News-Analytics is a project designed to fetch and analyse news articles on speci
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 
