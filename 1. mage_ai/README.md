@@ -20,11 +20,11 @@ Finally, start the Docker container:
 docker compose up
 ```
 
-Now, navigate to http://localhost:6789 in your browser! Voila! You're ready to get started with the course. 
+Now, navigate to http://localhost:6789 in your browser! Voila! You're ready to get started. 
 
 ### What just happened?
 
-We just initialized a new mage repository. It will be present in your project under the name `magic-zoomcamp`. If you changed the varable `PROJECT_NAME` in the `.env` file, it will be named whatever you set it to.
+We just initialized a new mage repository. If you changed the varable `PROJECT_NAME` in the `.env` file, it will be named whatever you set it to.
 
 This repository should have the following structure:
 
