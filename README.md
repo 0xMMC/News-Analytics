@@ -3,6 +3,7 @@
 ## Description
 News-Analytics is a project designed to fetch and analyse news articles on specific topics. By leveraging NewsAPI, it retrieves articles within a specified date range and applies various Natural Language Processing (NLP) techniques to extract sentiment scores, keywords, and named entities. The information is processed by a data pipeline developed with Mage.AI, dbt and PowerBI. Whether for academic research, market analysis, or personal interest, News-Analytics offers a comprehensive solution for understanding the context, impact and reach of news stories.
 
+![Dashboard Sample](Dashboard_Sample.png?raw=true "Dashboard Sample")
 
 ## Table of Contents
 
