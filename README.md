@@ -13,7 +13,8 @@ News-Analytics is a project designed to fetch and analyse news articles on speci
 
 
 ## Installation
-Before you begin, ensure you have Python 3.6+ and pip installed on your system.
+The diagram below summarises the project architecture and illustrates which components peform data extraction, orchestration, processing, storage and analytics.
+![Project Architecture](News-Analytics-Flowchart.jpeg?raw=true "Project Architecture")
 
 1. **Terraform Setup**:
    - Install Terraform to manage cloud resources. Follow the installation guide here: [Terraform Installation](https://developer.hashicorp.com/terraform/install).
